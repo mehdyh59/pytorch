@@ -31,9 +31,13 @@ num_epochs = 2
 batch_size = 100
 learning_rate = 0.01
 
+
+transform = transforms.Compose([transforms.ToTensor(),
+                                transforms.Normalize((0.1307,),(0.3081,))]) 
+
 #MNIST data prepration
-training_data = torchvision.datasets.MNIST(root='./data/MNIST', train=True,transform=transforms.ToTensor(), download=True)
-test_data = torchvision.datasets.MNIST(root='./data/MNIST/', train=False, transform=transforms.ToTensor(),download=False)
+training_data = torchvision.datasets.MNIST(root='./data/MNIST', train=True,transform=transform, download=True)
+test_data = torchvision.datasets.MNIST(root='./data/MNIST/', train=False, transform=transform,download=False)
 
 train_loader = torch.utils.data.DataLoader(training_data, batch_size=batch_size,shuffle=True)
 test_loader = torch.utils.data.DataLoader(test_data, batch_size=batch_size,shuffle=False)
@@ -139,4 +143,6 @@ for i in classes:
     writer.add_pr_curve(str(i), labels_i, preds_i, global_step=0)
     writer.close()
 
-    
+
+#save the model to be used in app
+torch.save(model.state_dict(),"./app/mnist_ffn.pth")
