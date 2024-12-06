@@ -27,9 +27,9 @@ writer = SummaryWriter("runs/MNIST2")
 input_size = 784 # 28 * 28 pixles 
 hidden_size = 100 # numnber of params in hidden layers
 num_classes = 10 # num digits to classify
-num_epochs = 2
+num_epochs = 5
 batch_size = 100
-learning_rate = 0.01
+learning_rate = 0.001
 
 
 transform = transforms.Compose([transforms.ToTensor(),
@@ -145,4 +145,4 @@ for i in classes:
 
 
 #save the model to be used in app
-torch.save(model.state_dict(),"./app/mnist_ffn.pth")
+torch.save(model.state_dict(),"mnist_ffn.pth")
