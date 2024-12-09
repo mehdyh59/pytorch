@@ -7,7 +7,7 @@ import torch
 import random
 
 
-ALL_LETTERS = string.ascii_letters + ".,;"
+ALL_LETTERS = string.ascii_letters + " .,;"
 N_LETTERS = len(ALL_LETTERS)
 DATA_DIRECTORY = '/Users/c3666498/Codes/Torch/pytorch/data/names/*.txt'
 
@@ -21,7 +21,7 @@ def unicode_to_ascii(s):
 # build the category-line dictionary, a list of names per language 
 def load_data():
     category_lines = {}
-    all_categroies = []
+    all_categories = []
 
     def find_files(path):
         return glob.glob(path)
@@ -33,12 +33,12 @@ def load_data():
 
     for filename in find_files(DATA_DIRECTORY):
         category = os.path.splitext(os.path.basename(filename))[0]
-        all_categroies.append(category)
+        all_categories.append(category)
 
         lines = read_lines(filename)
         category_lines[category]=lines
     
-    return category_lines, all_categroies
+    return category_lines, all_categories
 
 
 """
@@ -80,7 +80,7 @@ def random_training_example( category_lines, all_categroies):
     
     category = random_choice(all_categroies)
     line = random_choice(category_lines[category])
-    category_tensor = line_to_tensor(line)
+    category_tensor = torch.tensor([all_categroies.index(category)],dtype = torch.long)
     line_tensor = line_to_tensor(line)
     return category, line, category_tensor, line_tensor
 
